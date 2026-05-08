@@ -1,0 +1,45 @@
+cff-version: 1.2.0
+message: "If you cite the PRML Cookbook in academic or pedagogical work, please use the form below."
+title: "PRML Cookbook: Patterns and anti-patterns for using Pre-Registered ML Manifests"
+abstract: >-
+  A field manual for the PRML v0.1 specification. Eight patterns covering
+  single-shot evals, multi-seed reporting, streaming evaluations, dataset
+  pinning, CI gates, registry anchoring, revocation, and infrastructure-free
+  pre-registration. Four anti-patterns covering common implementation
+  mistakes. Four working examples (PyTorch, Stable-Baselines3, Inspect AI,
+  HuggingFace lm-eval-harness).
+authors:
+  - family-names: "Öztürk"
+    given-names: "Cüneyt"
+    affiliation: "Studio 11 Turkey Ltd. Şti."
+    email: "cuneyt@studio-11.co"
+type: software
+license: CC0-1.0
+repository-code: "https://github.com/studio-11-co/falsify-cookbook"
+url: "https://falsify.dev"
+version: "1.0.0"
+date-released: 2026-05-08
+keywords:
+  - "PRML"
+  - "pre-registration"
+  - "ML evaluation"
+  - "patterns"
+  - "documentation"
+  - "AI safety"
+preferred-citation:
+  type: software
+  title: "PRML Cookbook"
+  authors:
+    - family-names: "Öztürk"
+      given-names: "Cüneyt"
+  year: 2026
+  url: "https://github.com/studio-11-co/falsify-cookbook"
+  version: "1.0.0"
+references:
+  - type: article
+    title: "Pre-Registered ML Manifests: A Cryptographic Primitive for Verifiable Evaluation Claims"
+    authors:
+      - family-names: "Öztürk"
+        given-names: "Cüneyt"
+    year: 2026
+    url: "https://spec.falsify.dev/v0.1"
