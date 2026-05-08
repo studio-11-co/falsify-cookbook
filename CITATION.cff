@@ -12,7 +12,7 @@ authors:
   - family-names: "Öztürk"
     given-names: "Cüneyt"
     affiliation: "Studio 11 Turkey Ltd. Şti."
-    email: "cuneyt@studio-11.co"
+    email: "hello@studio-11.co"
 type: software
 license: CC0-1.0
 repository-code: "https://github.com/studio-11-co/falsify-cookbook"
