@@ -1,0 +1,20 @@
+version: prml/0.1
+claim_id: 01900000-0000-7000-8000-000000000002
+created_at: "2026-05-08T20:00:00Z"
+metric: mean_episode_reward_over_seeds
+comparator: ">="
+threshold: 200.0
+dataset:
+  id: lunar-lander-v2
+  hash: "n/a-deterministic-env"
+  uri: https://gymnasium.farama.org/environments/box2d/lunar_lander/
+seed: 42
+producer:
+  id: studio-11.co
+model:
+  id: ppo-lunarlander-2026-05-08
+notes: |
+  PPO trained for 1M steps. Eval = mean of episode rewards over
+  5 seeds (42, 43, 44, 45, 46), 100 episodes each. Threshold
+  direction reflects the HF Deep RL Course's success criterion
+  for LunarLander-v2.

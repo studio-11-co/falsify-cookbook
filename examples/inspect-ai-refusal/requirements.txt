@@ -1,0 +1,3 @@
+falsify>=0.1.4
+falsify-inspect>=0.1.0
+inspect_ai>=0.3.0
