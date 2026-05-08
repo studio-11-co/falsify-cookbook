@@ -25,6 +25,7 @@ Every pattern is:
 | 6 | [Public registry anchoring](patterns/06-registry-anchor.md) | When and when not to publish your hash publicly. |
 | 7 | [Revocation](patterns/07-revocation.md) | Withdrawing a manifest after publication. (v0.2 feature.) |
 | 8 | [Pre-registration without infrastructure](patterns/08-no-infra.md) | The minimum-viable workflow: a YAML file and `sha256sum`. |
+| 9 | [RLHF win-rate evaluations](patterns/09-rlhf-winrate.md) | Judge-model comparisons (AlpacaEval, MT-Bench, Arena-Hard). |
 
 ## Anti-patterns
 
