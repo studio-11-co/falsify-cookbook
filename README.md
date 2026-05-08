@@ -26,6 +26,7 @@ Every pattern is:
 | 7 | [Revocation](patterns/07-revocation.md) | Withdrawing a manifest after publication. (v0.2 feature.) |
 | 8 | [Pre-registration without infrastructure](patterns/08-no-infra.md) | The minimum-viable workflow: a YAML file and `sha256sum`. |
 | 9 | [RLHF win-rate evaluations](patterns/09-rlhf-winrate.md) | Judge-model comparisons (AlpacaEval, MT-Bench, Arena-Hard). |
+| 10 | [Federated evaluation](patterns/10-federated-eval.md) | Multi-org replication: shared hash, distinct producers, regulator-grade audit trail. |
 
 ## Anti-patterns
 
