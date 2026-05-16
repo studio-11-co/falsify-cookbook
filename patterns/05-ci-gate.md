@@ -39,7 +39,7 @@ jobs:
           falsify-version: "0.1.4"
 ```
 
-`@v1` is a moving tag that tracks the latest 1.x release (currently `v1.0.1`). Pin to `@v1.0.1` instead if you want zero supply-chain surprises. Both `checkout` and `setup-python` are on `@v6` to match the action's own internal pinning standard — older majors still work but won't get future security backports on the runner-images timeline.
+`@v1` is a moving tag that tracks the latest 1.x release (currently `v1.0.2`). Pin to `@v1.0.2` instead if you want zero supply-chain surprises. Both `checkout` and `setup-python` are on `@v6` to match the action's own internal pinning standard — older majors still work but won't get future security backports on the runner-images timeline.
 
 ## Three modes
 
