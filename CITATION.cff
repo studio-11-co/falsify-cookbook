@@ -2,10 +2,11 @@ cff-version: 1.2.0
 message: "If you cite the PRML Cookbook in academic or pedagogical work, please use the form below."
 title: "PRML Cookbook: Patterns and anti-patterns for using Pre-Registered ML Manifests"
 abstract: >-
-  A field manual for the PRML v0.1 specification. Eight patterns covering
+  A field manual for the PRML v0.1 specification. Ten patterns covering
   single-shot evals, multi-seed reporting, streaming evaluations, dataset
-  pinning, CI gates, registry anchoring, revocation, and infrastructure-free
-  pre-registration. Four anti-patterns covering common implementation
+  pinning, CI gates, registry anchoring, revocation, infrastructure-free
+  pre-registration, RLHF win-rate evaluations, and federated evaluation
+  across organisations. Four anti-patterns covering common implementation
   mistakes. Four working examples (PyTorch, Stable-Baselines3, Inspect AI,
   HuggingFace lm-eval-harness).
 authors:
