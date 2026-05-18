@@ -39,6 +39,10 @@ Every pattern is:
 | A3 | [Storing private data in the manifest](anti/A3-private-data.md) | The hash is published; the manifest content might be too. |
 | A4 | [Treating the hash as proof of *truth*](anti/A4-hash-as-truth.md) | The hash proves *commitment*, not *correctness*. |
 
+## Reference
+
+- [Identity levels (0–4)](IDENTITY-LEVELS.md) — a non-normative ladder for the binding strength between `producer` and the real-world authoring entity. Used by Pattern 11 and the v0.3 RFC.
+
 
 ## Audit & compliance crosswalks
 
