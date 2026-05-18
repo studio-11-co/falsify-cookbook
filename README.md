@@ -28,6 +28,7 @@ Every pattern is:
 | 8 | [Pre-registration without infrastructure](patterns/08-no-infra.md) | The minimum-viable workflow: a YAML file and `sha256sum`. |
 | 9 | [RLHF win-rate evaluations](patterns/09-rlhf-winrate.md) | Judge-model comparisons (AlpacaEval, MT-Bench, Arena-Hard). |
 | 10 | [Federated evaluation](patterns/10-federated-eval.md) | Multi-org replication: shared hash, distinct producers, regulator-grade audit trail. |
+| 11 | [PRML + Sigstore for execution integrity](patterns/11-sigstore-execution.md) | Closes the §8.1 gap: who ran the eval, when, against which exact artefacts. |
 
 ## Anti-patterns
 
