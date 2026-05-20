@@ -1,3 +1,8 @@
+---
+Authors: Cüneyt Öztürk (Studio 11, falsify)
+License: CC0-1.0
+---
+
 # Pattern 11 — PRML + Sigstore for execution integrity
 
 > **When to use:** You've pre-registered the threshold with PRML, and now you also want a tamper-evident record of *who ran the eval, when, and against which exact artefacts*. PRML alone names this gap explicitly in §8.1; Sigstore closes most of it.
