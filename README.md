@@ -29,6 +29,7 @@ Every pattern is:
 | 9 | [RLHF win-rate evaluations](patterns/09-rlhf-winrate.md) | Judge-model comparisons (AlpacaEval, MT-Bench, Arena-Hard). |
 | 10 | [Federated evaluation](patterns/10-federated-eval.md) | Multi-org replication: shared hash, distinct producers, regulator-grade audit trail. |
 | 11 | [PRML + Sigstore for execution integrity](patterns/11-sigstore-execution.md) | Closes the §8.1 gap: who ran the eval, when, against which exact artefacts. |
+| 13 | [PRML + commit-reveal validation for independence attestation](patterns/13-commit-reveal-validation.md) | Closes the other §8.1 gap: structural proof that independent evaluators couldn't coordinate verdicts. Co-authored with [ValiChord](https://github.com/topeuph-ai/ValiChord). |
 
 ## Anti-patterns
 
