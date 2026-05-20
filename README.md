@@ -3,7 +3,7 @@
 > Short, opinionated patterns for using PRML in real ML evaluation pipelines.
 
 [![Spec](https://img.shields.io/badge/PRML-v0.1-39D98A.svg)](https://spec.falsify.dev/v0.1)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20177839.svg)](https://doi.org/10.5281/zenodo.20177839)
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.20177839-blue.svg)](https://doi.org/10.5281/zenodo.20177839)
 [![License](https://img.shields.io/badge/license-CC0-blue.svg)](LICENSE)
 
 This is the field-manual for the [PRML specification](https://spec.falsify.dev/v0.1). The spec tells you *what* a manifest is. The cookbook tells you *how* to use it without shooting yourself in the foot.
