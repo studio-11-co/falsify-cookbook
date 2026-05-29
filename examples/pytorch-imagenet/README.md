@@ -8,7 +8,7 @@ Before running an ImageNet validation pass on a ResNet-50 checkpoint, we:
 
 1. Compute the SHA-256 hash of the dataset
 2. Author a PRML manifest committing to threshold `accuracy >= 0.92`
-3. Lock the manifest hash and write it to `manifest.hash`
+3. Lock the manifest (writes the `manifest.prml.sha256` sidecar)
 4. Run the eval
 5. Verify the post-run log against the hash
 
@@ -18,8 +18,8 @@ If anyone later edits `manifest.yaml` (even a typo), step 5 fails with exit code
 
 - [`run.py`](run.py) — the eval driver (PyTorch)
 - [`manifest.yaml`](manifest.yaml) — the PRML manifest
-- [`manifest.hash`](manifest.hash) — the locked SHA-256 (committed to git)
-- [`requirements.txt`](requirements.txt) — `torch`, `torchvision`, `falsify>=0.1.4`
+- `manifest.prml.sha256` — the locked SHA-256 sidecar (committed to git)
+- [`requirements.txt`](requirements.txt) — `torch`, `torchvision` (PRML verify via `falsify-js`, npm)
 
 ## Run it
 
