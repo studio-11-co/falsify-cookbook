@@ -12,14 +12,11 @@ The convention is three files and one paragraph:
 2. Its `spec.lock.json` sidecar next to it.
 3. A short block in the card body: the claim in plain English, the SHA-256, and a one-line "how to verify".
 
-Anyone who clones the repo runs `falsify verdict` and gets PASS / FAIL / TAMPERED. The card's number stops being an assertion and becomes a receipt.
+Anyone who clones the repo re-derives the hash and checks it against the card — with `falsify-js` (the PRML reference CLI), a Go/Rust reference binary, or by pasting the manifest at [registry.falsify.dev](https://registry.falsify.dev). The card's number stops being an assertion and becomes a receipt.
 
 ## Author and lock locally (before the run)
 
-```bash
-falsify init imagenet-acc
-# edit .falsify/imagenet-acc/spec.yaml:
-```
+Write the manifest as a file, e.g. `imagenet-acc.prml.yaml`:
 
 ```yaml
 version: prml/0.1
@@ -30,7 +27,7 @@ comparator: ">="
 threshold: 0.90
 dataset:
   id: imagenet-1k
-  hash: hf:revision-<commit-sha>        # pin the HF dataset revision, not "latest"
+  hash: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855   # sha256 of the pinned dataset revision (64 lowercase hex; see Pattern 4)
   uri: https://huggingface.co/datasets/ILSVRC/imagenet-1k
 seed: 42
 producer:
@@ -39,10 +36,15 @@ model:
   id: your-org/your-model
 ```
 
+Lock it with the PRML reference CLI (canonicalizes, hashes, writes a sidecar):
+
 ```bash
-falsify lock imagenet-acc
-# -> .falsify/imagenet-acc/spec.lock.json written, sha256:fb74...f19c
+npm install -g falsify-js js-yaml          # the reference CLI; js-yaml lets it read .yaml
+falsify-js lock imagenet-acc.prml.yaml
+# locked  sha256: <64-hex digest>          (sidecar: imagenet-acc.prml.prml.sha256)
 ```
+
+(Go and Rust reference binaries, and the in-browser tool at registry.falsify.dev, produce the byte-identical hash.)
 
 Then run the eval and record the verdict. The hash is now frozen; editing the spec afterwards breaks it.
 
@@ -54,15 +56,14 @@ from huggingface_hub import HfApi
 api = HfApi()
 repo = "your-org/your-model"
 
-# 1. ship the manifest + lock so the claim is re-derivable from the repo itself
-for f in ("spec.yaml", "spec.lock.json"):
-    api.upload_file(
-        path_or_fileobj=f".falsify/imagenet-acc/{f}",
-        path_in_repo=f".prml/imagenet-acc/{f}",
-        repo_id=repo,
-        repo_type="model",
-        commit_message="Add pre-registered PRML eval manifest",
-    )
+# ship the manifest so the claim is re-derivable from the repo itself
+api.upload_file(
+    path_or_fileobj="imagenet-acc.prml.yaml",
+    path_in_repo=".prml/imagenet-acc.prml.yaml",
+    repo_id=repo,
+    repo_type="model",
+    commit_message="Add pre-registered PRML eval manifest",
+)
 ```
 
 ## The card block
@@ -76,11 +77,12 @@ Add to the model card body (the README's prose, below the metric):
 Committed before the run as a PRML manifest:
 `sha256:fb7403c40afe63d892bf4aea2c123fdd7fe85366b74a277875465c4cb3cbf19c`
 
-Verify from this repo:
+Verify (no install): paste `.prml/imagenet-acc.prml.yaml` at https://registry.falsify.dev and re-derive the hash. Or with the reference CLI:
 
-    pip install falsify
-    falsify verdict .prml/imagenet-acc/spec.yaml
-    # PASS  accuracy 0.934 >= 0.90  (hash verified)
+    npm install -g falsify-js js-yaml
+    falsify-js verify .prml/imagenet-acc.prml.yaml --observed 0.934
+    # PASS  metric=accuracy  observed=0.934  >=  threshold=0.9   (exit 0)
+    # exit 3 = TAMPERED (hash mismatch) · exit 10 = FAIL (below threshold)
 
 Public anchor: https://registry.falsify.dev/<hash>
 ```
@@ -103,7 +105,7 @@ Optionally also fill the standard Hugging Face `model-index` `eval_results` in t
 
 - **Proving the eval was actually run on that model.** PRML verifies what was *committed*, not what was *executed*. A publisher can pre-register, run on a different checkpoint, and record a flattering number. PRML §8.1 names this. For execution integrity, attest the run with Sigstore — see [Pattern 11](11-sigstore-execution.md).
 
-- **Native Hub rendering.** The Hub will not render or validate PRML for you; this is a convention you adopt, not a Hub feature. The value is that *anyone* can verify with `pip install falsify`, with or without Hub support.
+- **Native Hub rendering.** The Hub will not render or validate PRML for you; this is a convention you adopt, not a Hub feature. The value is that *anyone* can verify with the reference CLI or the in-browser registry, with or without Hub support.
 
 - **Replacing the model card.** This sits *under* the card, it doesn't replace it. The card stays the human-readable summary; PRML makes one specific claim on it checkable. (Background: [Model cards vs pre-registration](https://falsify.dev/notes/model-cards-vs-pre-registration/).)
 
