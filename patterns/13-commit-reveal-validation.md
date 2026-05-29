@@ -1,5 +1,5 @@
 ---
-Authors: Cüneyt Öztürk (Studio 11, falsify) and Ceri John (Topeuph AI, ValiChord)
+Authors: Cüneyt Öztürk (falsify) and Ceri John (Topeuph AI, ValiChord)
 License: CC0-1.0
 ---
 

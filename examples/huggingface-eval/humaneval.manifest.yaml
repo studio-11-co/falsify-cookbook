@@ -10,7 +10,7 @@ dataset:
   uri: https://huggingface.co/datasets/openai/openai_humaneval
 seed: 42
 producer:
-  id: studio-11.co
+  id: falsify.dev
 model:
   id: meta-llama/Llama-3.1-8B-Instruct
 notes: HumanEval pass@1, n=164 problems, temperature 0.0, single completion per problem.

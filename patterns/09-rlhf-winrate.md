@@ -30,7 +30,7 @@ dataset:
   uri: https://huggingface.co/datasets/tatsu-lab/alpaca_eval
 seed: 42
 producer:
-  id: studio-11.co
+  id: falsify.dev
 model:
   id: experimental-rlhf-2026-05-09
 notes: |

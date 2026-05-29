@@ -10,7 +10,7 @@ dataset:
   uri: https://image-net.org/data/ILSVRC2012_img_val.tar
 seed: 42
 producer:
-  id: studio-11.co
+  id: falsify.dev
 model:
   id: resnet50-fp16
   hash: REPLACE_WITH_MODEL_SHA256

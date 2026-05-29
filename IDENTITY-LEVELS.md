@@ -51,7 +51,7 @@ producer's control.
 
 ```yaml
 producer:
-  id: studio-11.co
+  id: falsify.dev
 # anchor: git commit a3f9c...c821 in studio-11-co/falsify on 2026-05-08
 # or:   registry receipt at registry.falsify.dev/<hash>
 ```
@@ -63,7 +63,7 @@ at least one external system.
 **What this does not defend against:** The `producer` string is still
 unsigned. Anyone with push access to the repository, or anyone with a
 manifest copy, can submit it under their own name elsewhere. Multiple
-"studio-11.co" producers are not distinguishable.
+"falsify.dev" producers are not distinguishable.
 
 **Use when:** You publish your manifests in a public repo and want a
 default audit trail. This is the level most v0.1/v0.2 manifests
@@ -80,7 +80,7 @@ git commit signed with a known SSH key).
 
 ```yaml
 producer:
-  id: studio-11.co
+  id: falsify.dev
   signature: <detached signature over canonical bytes>
 ```
 
@@ -109,7 +109,7 @@ log entry. Both certificate and Rekor entry are public.
 
 ```yaml
 producer:
-  id: studio-11.co
+  id: falsify.dev
   sigstore_bundle: <inline JSON bundle>
 # Rekor entry: https://search.sigstore.dev/?hash=<sha256>
 ```

@@ -10,7 +10,7 @@ dataset:
   uri: https://gymnasium.farama.org/environments/box2d/lunar_lander/
 seed: 42
 producer:
-  id: studio-11.co
+  id: falsify.dev
 model:
   id: ppo-lunarlander-2026-05-08
 notes: |

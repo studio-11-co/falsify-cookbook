@@ -54,7 +54,7 @@ threshold_rationale: "We chose 0.92 because customer Acme requires 90%+ for proc
 ```yaml
 metric: "accuracy"
 threshold: 0.92
-# (rationale documented in internal RFC https://internal.studio-11.co/rfc/12)
+# (rationale documented in internal RFC https://internal.falsify.dev/rfc/12)
 ```
 
 The internal RFC stays internal. The manifest stays publicly verifiable.
