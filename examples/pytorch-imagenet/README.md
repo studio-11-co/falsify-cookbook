@@ -37,16 +37,15 @@ print(h.hexdigest())
 "
 # Paste result into manifest.yaml's dataset_hash field
 
-# 2. Lock the manifest
-falsify lock manifest.yaml > manifest.hash
-cat manifest.hash
-# sha256:...
+# 2. Lock the manifest  (PRML reference CLI: npm install -g falsify-js js-yaml)
+falsify-js lock manifest.yaml
+# writes manifest.prml.sha256 sidecar and prints the sha256
 
 # 3. Run the eval
 python3 run.py
 
-# 4. Verify
-falsify verify manifest.yaml --hash "$(cat manifest.hash)"
+# 4. Verify the manifest is intact (exit 0 = OK, 3 = tampered)
+falsify-js verify manifest.yaml
 # OK
 ```
 

@@ -24,16 +24,17 @@ This example:
 ```bash
 pip install -r requirements.txt
 
-# 1. Lock the manifest (before training!)
-falsify lock manifest.yaml > manifest.hash
+# 1. Lock the manifest (before training!)  — PRML reference CLI: npm install -g falsify-js js-yaml
+falsify-js lock manifest.yaml
+# writes manifest.prml.sha256 sidecar
 
 # 2. Train + eval
 python3 train_and_eval.py
 # trains for ~1M steps, then evaluates on seeds 42..46
 # outputs: mean=205.3 ± 12.4, verdict=pass
 
-# 3. Verify
-falsify verify manifest.yaml --hash "$(cat manifest.hash)"
+# 3. Verify the manifest is intact (exit 0 = OK, 3 = tampered)
+falsify-js verify manifest.yaml
 # OK
 ```
 
