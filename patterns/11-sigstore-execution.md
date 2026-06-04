@@ -151,7 +151,7 @@ jobs:
             "$LOG"
 
       # CI gate — verdict must pass and both signatures must verify
-      - uses: studio-11-co/prml-verify-action@v1
+      - uses: studio-11-co/prml-verify-action@v2
         with:
           mode: verdict
           claim: harmbench-q3-2026

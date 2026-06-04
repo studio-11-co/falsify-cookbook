@@ -33,13 +33,13 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.11"
-      - uses: studio-11-co/prml-verify-action@v1
+      - uses: studio-11-co/prml-verify-action@v2
         with:
           mode: guard
           falsify-version: "0.1.4"
 ```
 
-`@v1` is a moving tag that tracks the latest 1.x release (currently `v1.0.2`). Pin to `@v1.0.2` instead if you want zero supply-chain surprises. Both `checkout` and `setup-python` are on `@v6` to match the action's own internal pinning standard — older majors still work but won't get future security backports on the runner-images timeline.
+`@v2` is a moving tag that tracks the latest 2.x release (currently `v2.0.3`). Pin to `@v2.0.3` instead if you want zero supply-chain surprises. Both `checkout` and `setup-python` are on `@v6` to match the action's own internal pinning standard — older majors still work but won't get future security backports on the runner-images timeline.
 
 ## Three modes
 
@@ -71,7 +71,7 @@ If you've anchored a claim publicly and want CI to fail on *any* drift — not j
 
 ```yaml
 - uses: actions/checkout@v6
-- uses: studio-11-co/prml-verify-action@v1
+- uses: studio-11-co/prml-verify-action@v2
   with:
     mode: verdict
     claim: imagenet-resnet50-baseline

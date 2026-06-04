@@ -21,7 +21,7 @@ The hash is the same across all three. The roles diverge only in what each *publ
 
 ## Manifest
 
-The manifest itself doesn't change shape per role. The same eight v0.1 fields apply. What changes is the surrounding workflow:
+The manifest itself doesn't change shape per role. The same nine v0.1 fields apply. What changes is the surrounding workflow:
 
 ```yaml
 version: prml/0.1
