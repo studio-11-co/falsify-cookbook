@@ -9,6 +9,11 @@ License: CC0-1.0
 > proof that independent evaluators couldn't coordinate their verdicts — not just a
 > signed record of who ran it.
 
+> **▶ Runnable:** [`examples/pattern13_prml_commit_reveal.py`](examples/pattern13_prml_commit_reveal.py)
+> runs all three layers end to end (real PRML + real bundle crypto + a local commit-reveal
+> round) and stages three adversarial cases — one per layer. `python3 pattern13_prml_commit_reveal.py`,
+> stdlib only. See [`examples/README.md`](examples/README.md) for what is real vs locally simulated.
+
 ## The gap Pattern 11 (Sigstore) alone leaves open
 
 Pattern 11 closes the execution integrity gap: it proves who ran the eval, when,
