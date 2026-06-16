@@ -9,16 +9,18 @@ PRML is a SHA-256 hash over canonical YAML bytes. You don't need anything we bui
 ```bash
 # 1. Write the manifest
 cat > manifest.yaml <<'EOF'
-prml_version: "0.1"
+version: "prml/0.1"
+claim_id: "resnet50-imagenet-acc"
+created_at: "2026-05-08T20:00:00Z"
 metric: "accuracy"
+comparator: ">="
 threshold: 0.92
-threshold_direction: ">="
-dataset: "imagenet-1k-val"
-dataset_hash: "sha256:9e2c8d1a..."
-model_version: "resnet50-2026-05-08-fp16"
-sample_size: 50000
+dataset:
+  id: "imagenet-1k-val"
+  hash: "9e2c8d1a3b4c5d6e7f80911a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e"
 seed: 42
-pre_registered: "2026-05-08T20:00:00Z"
+producer:
+  id: "your-lab.dev"
 EOF
 
 # 2. Compute the hash
@@ -66,7 +68,7 @@ If you use the official reference impl (`falsify lock`), it handles canonicalisa
 
 ## What goes wrong
 
-**1. Editing the manifest after committing the hash.** Even fixing a typo. Even adding a comment. Even pressing save in some editors that re-write the whole file. The hash will not match. The fix is not "edit and re-hash" — the fix is to issue a *new* manifest with a fresh `pre_registered` timestamp.
+**1. Editing the manifest after committing the hash.** Even fixing a typo. Even adding a comment. Even pressing save in some editors that re-write the whole file. The hash will not match. The fix is not "edit and re-hash" — the fix is to issue a *new* manifest with a fresh `created_at` timestamp.
 
 **2. Inconsistent line endings between machines.** You hash on macOS (LF), someone re-derives on Windows (CRLF), the hash doesn't match. Pin LF in your `.gitattributes`:
 

@@ -1,5 +1,8 @@
 # Pattern 3 — Streaming Elo / arena eval
 
+> **⚠️ v0.2 RFC illustration.** This pattern uses the **streaming-mode** extension, which is part of the *frozen v0.2 RFC* and is **not yet in the reference implementation**. The manifest below shows design intent; it is not runnable with the current `falsify` CLI (v0.1).
+
+
 > **When to use:** Your eval is *live* (Chatbot Arena, A/B-tested production, drift monitor). The "threshold" is a window-aggregated statistic, not a single number locked at one instant.
 
 > **Spec status:** This pattern uses the **v0.2 streaming variant** (`prml_mode: streaming`). See [v0.2-rfc proposal P-01](https://spec.falsify.dev/v0.2-rfc#p-01-streaming-continuous-eval-variant). For v0.1-only deployments, fall back to Pattern 1 with a fixed window snapshot.

@@ -7,16 +7,18 @@
 Before you run the eval, you commit nine things:
 
 ```yaml
-prml_version: "0.1"
+version: "prml/0.1"
+claim_id: "resnet50-imagenet-acc"
+created_at: "2026-05-08T20:00:00Z"        # RFC 3339 UTC, before the run
 metric: "accuracy"
+comparator: ">="
 threshold: 0.92
-threshold_direction: ">="
-dataset: "imagenet-1k-val"
-dataset_hash: "sha256:9e2c8d1a..."   # SHA-256 of the resized 50,000-image tarball
-model_version: "resnet50-2026-05-08-fp16"
-sample_size: 50000
+dataset:
+  id: "imagenet-1k-val"
+  hash: "9e2c8d1a3b4c5d6e7f80911a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e"  # SHA-256 of the resized 50,000-image tarball (64 hex)
 seed: 42
-pre_registered: "2026-05-08T20:00:00Z"
+producer:
+  id: "your-lab.dev"
 ```
 
 The hash of these fields is your receipt that the threshold (`>= 0.92`) was set before the run.
@@ -30,7 +32,7 @@ falsify lock manifest.yaml
 
 # ...run your eval...
 
-falsify verify manifest.yaml --hash sha256:e3b0c44298fc1c14a...
+falsify verify manifest.yaml --expected-hash e3b0c44298fc1c14a...
 # OK
 ```
 
@@ -40,7 +42,7 @@ falsify verify manifest.yaml --hash sha256:e3b0c44298fc1c14a...
 
 **2. Float precision.** `threshold: 0.92` and `threshold: 0.920` are different bytes. Pick one form for your project and stick with it. The reference impls handle this consistently — but your YAML editor may not.
 
-**3. Pre-registration drift.** You commit at T=0, you start the run at T=2h. If something forces you to re-launch the eval at T=4h, the manifest still says T=0. That's correct: the *commitment* didn't change; only the run did. If you want to mark a re-run, emit a *new* manifest with a fresh `pre_registered` timestamp; don't edit the old one.
+**3. Pre-registration drift.** You commit at T=0, you start the run at T=2h. If something forces you to re-launch the eval at T=4h, the manifest still says T=0. That's correct: the *commitment* didn't change; only the run did. If you want to mark a re-run, emit a *new* manifest with a fresh `created_at` timestamp; don't edit the old one.
 
 ## What doesn't work
 
@@ -53,16 +55,18 @@ falsify verify manifest.yaml --hash sha256:e3b0c44298fc1c14a...
 ## Minimal manifest skeleton (copy/paste)
 
 ```yaml
-prml_version: "0.1"
-metric: ""                 # e.g. "accuracy", "f1", "refusal_rate"
+version: "prml/0.1"
+claim_id: ""               # short stable id for this claim
+created_at: ""             # RFC 3339 UTC, before the run
+metric: ""                 # e.g. "accuracy", "f1"
+comparator: ">="           # >= | <= | > | < | ==
 threshold: 0.0
-threshold_direction: ">="  # >= | <= | > | < | ==
-dataset: ""
-dataset_hash: "sha256:"
-model_version: ""
-sample_size: 0
+dataset:
+  id: ""
+  hash: ""                 # 64 lowercase hex chars (SHA-256)
 seed: 0
-pre_registered: ""         # RFC 3339 UTC, e.g. "2026-05-08T20:00:00Z"
+producer:
+  id: ""                   # who commits the claim
 ```
 
 ## Next pattern

@@ -1,5 +1,8 @@
 # Pattern 7 — Revocation
 
+> **⚠️ v0.2 RFC illustration.** This pattern uses the **revocation** extension, which is part of the *frozen v0.2 RFC* and is **not yet in the reference implementation**. The manifest below shows design intent; it is not runnable with the current `falsify` CLI (v0.1).
+
+
 > **When to use:** A pre-registered manifest needs to be retracted because the underlying dataset is found contaminated, the model build is recalled, or the claim is no longer accurate.
 
 > **Spec status:** Revocation is a **v0.2 feature** ([proposal P-03](https://spec.falsify.dev/v0.2-rfc#p-03-revocation-primitive)). For v0.1-only deployments, the equivalent is a public retraction notice — see "v0.1 fallback" below.

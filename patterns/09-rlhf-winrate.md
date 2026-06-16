@@ -26,7 +26,7 @@ comparator: ">="
 threshold: 0.55
 dataset:
   id: alpaca-eval-2-2024-08
-  hash: huggingface:revision-d8f3e1a2
+  hash: "d8f3e1a2c4b6098e7f5a3c1b9d8e7f6a5c4b3d2e1f0a9b8c7d6e5f4a3b2c1d0e"  # SHA-256 of the pinned HF revision
   uri: https://huggingface.co/datasets/tatsu-lab/alpaca_eval
 seed: 42
 producer:
@@ -82,7 +82,7 @@ Selective publication still applies (PRML §8.1). A publisher running 50 RLHF va
 ```bash
 falsify lock manifest.yaml
 # run eval
-falsify verify manifest.yaml --hash <hash>
+falsify verify manifest.yaml --expected-hash <hash>
 ```
 
 For multi-judge robustness (more than one judge specified):

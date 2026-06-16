@@ -9,8 +9,9 @@ Two papers can both report "62% on HumanEval" against two different dataset revi
 ## The fix in two fields
 
 ```yaml
-dataset: "humaneval"
-dataset_hash: "sha256:7c33e0a4b2..."  # SHA-256 of the canonical bytes
+dataset:
+  id: "humaneval"
+  hash: "7c33e0a4b2d1f8e6c5a4938271605f4e3d2c1b0a99887766554433221100ffee"  # SHA-256 of the canonical bytes (64 hex)
 ```
 
 `dataset` is the *name* (human-readable); `dataset_hash` is the *content commitment* (machine-verifiable). Pre-compute the hash once and paste it.
@@ -51,8 +52,9 @@ print(ds.info.dataset_size, ds.info.download_size)
 Your manifest's `dataset_hash` then references that platform SHA explicitly:
 
 ```yaml
-dataset: "openai/human-eval"
-dataset_hash: "huggingface:revision-d8f3e1a2..."
+dataset:
+  id: "openai/human-eval @ hf-revision d8f3e1a2"
+  hash: "d8f3e1a2c4b6098e7f5a3c1b9d8e7f6a5c4b3d2e1f0a9b8c7d6e5f4a3b2c1d0e"  # SHA-256 of that revision
 ```
 
 We use `huggingface:` instead of `sha256:` here because the underlying hash is the platform's, not yours. The point is: anyone who reads your manifest must be able to fetch *exactly* the dataset you committed against.

@@ -14,22 +14,24 @@ This needs two PRML decisions before the run:
 ## Manifest
 
 ```yaml
-prml_version: "0.1"
+version: "prml/0.1"
+claim_id: "claude-humaneval-meanacc-5seeds"
+created_at: "2026-05-08T20:00:00Z"
 metric: "mean_accuracy_over_seeds"
+comparator: ">="
 threshold: 0.90
-threshold_direction: ">="
-dataset: "humaneval"
-dataset_hash: "sha256:..."
-model_version: "claude-3.5-sonnet@2025-10-01"
-sample_size: 5             # number of seeds, NOT number of dataset samples
-seed: 42                   # the *seed seed* — base from which derived seeds are computed
-pre_registered: "2026-05-08T20:00:00Z"
+dataset:
+  id: "humaneval"
+  hash: "7c33e0a4b2d1f8e6c5a4938271605f4e3d2c1b0a99887766554433221100ffee"  # SHA-256 of the canonical bytes
+seed: 42                   # the *seed seed*; sweep 5 derived seeds (see prose)
+producer:
+  id: "your-lab.dev"
 ```
 
 The crucial decisions are encoded in:
 
 - `metric: "mean_accuracy_over_seeds"` — a label only you control. Pick a convention and document it.
-- `sample_size: 5` — note this is the **number of seeds**, not the eval set size. PRML's `sample_size` is generic; you decide what counts.
+- **Seed count lives in the metric, not a manifest field.** PRML v0.1 has no `sample_size` field; encode the number of seeds in the `metric` name (`mean_accuracy_over_seeds`) or `claim_id`, and document the exact seed list in your methodology so a verifier can reproduce it.
 - `seed: 42` — the *base* seed. Your eval code derives seeds 42, 43, 44, 45, 46 from it deterministically.
 
 ## Run
@@ -71,7 +73,7 @@ Don't try to encode "0.92 ± 0.03" in one field; you'll hit canonicalisation iss
 
 **2. Inconsistent seed derivation.** If your code says `seed = 42 + i` but a colleague's code says `seed = hash(42, i)`, you'll get different scores from the same manifest. Pin the seed-derivation function in the metric name itself (e.g. `metric: "mean_accuracy_seeds_42_to_46"`) or document it in the model card the manifest links to.
 
-**3. Mid-run seed change.** You're 3 seeds in, one of them OOMs, you restart with a different list. Now your manifest's `sample_size: 5` and `seed: 42` no longer match what was run. Re-issue the manifest with a fresh `pre_registered` timestamp.
+**3. Mid-run seed change.** You're 3 seeds in, one of them OOMs, you restart with a different list. Now your committed `seed: 42` (and the seed-count baked into the metric) no longer matches what was run. Re-issue the manifest with a fresh `created_at` timestamp.
 
 ## What doesn't work
 

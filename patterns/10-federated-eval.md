@@ -32,7 +32,7 @@ comparator: ">="
 threshold: 0.95
 dataset:
   id: harmbench-v1
-  hash: sha256:f1e2d3c4b5a6...
+  hash: "f1e2d3c4b5a697887766554433221100ffeeddccbbaa99887766554433221100"  # SHA-256 of the shared dataset
   uri: https://github.com/centerforaisafety/HarmBench
 seed: 42
 producer:
@@ -110,7 +110,7 @@ falsify anchor manifest.yaml --public
 
 # Replicator
 curl -sL https://example.com/manifest.yaml > manifest.yaml
-falsify verify manifest.yaml --hash "$(curl -sL https://example.com/manifest.hash)"
+falsify verify manifest.yaml --expected-hash "$(curl -sL https://example.com/manifest.hash)"
 # OK
 
 # ... run eval ...
