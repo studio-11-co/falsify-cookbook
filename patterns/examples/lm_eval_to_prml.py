@@ -181,6 +181,18 @@ def main():
     print("\n[VERIFY] after the run — check the result against the sealed bar")
     cmd_verify(lock, args)
 
+    # The embed hook: hand a host an in-toto (ITE-6) attestation of the locked claim,
+    # so a platform that already ingests SLSA/in-toto can treat the pre-registered eval
+    # as one more predicate type. (falsify >= 0.3.8)
+    if hasattr(prml, "to_intoto_statement"):
+        print("\n[ATTEST] emit the locked claim as an in-toto (ITE-6) Statement")
+        stmt = prml.to_intoto_statement(lock["manifest"])
+        print(f"  _type         : {stmt['_type']}")
+        print(f"  predicateType : {stmt['predicateType']}")
+        print(f"  subject[0]    : {stmt['subject'][0]['name']}  "
+              f"sha256={stmt['subject'][0]['digest']['sha256'][:16]}…  (== the PRML lock)")
+        print("  -> drop this into your evidence bundle / transparency log. See docs/EMBED.md.")
+
     print("\n[ADVERSARIAL] someone lowers the threshold 0.75 -> 0.78 post-hoc")
     moved = json.loads(json.dumps(lock))
     moved["manifest"]["threshold"] = 0.78  # edit the manifest, keep the old locked hash
