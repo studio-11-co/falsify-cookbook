@@ -89,7 +89,7 @@ Contact: hello@falsify.dev · [falsify.dev](https://falsify.dev)
 
 ## Status
 
-- v0.1 stable. v0.2 RFC open through 2026-05-22 — [spec.falsify.dev/v0.2-rfc](https://spec.falsify.dev/v0.2-rfc).
+- v0.1 stable. v0.2 RFC frozen 2026-05-22 — [spec.falsify.dev/v0.2-rfc](https://spec.falsify.dev/v0.2-rfc).
 - The PRML JSON Schema is in the [SchemaStore catalog](https://www.schemastore.org/json/) (merged 2026-05-11), so `*.prml.yaml` files autocomplete in VS Code, JetBrains, Helix, Zed, and Cursor out of the box.
 
 ## Contributing
