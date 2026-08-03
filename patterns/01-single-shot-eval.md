@@ -8,7 +8,7 @@ Before you run the eval, you commit nine things:
 
 ```yaml
 version: "prml/0.1"
-claim_id: "resnet50-imagenet-acc"
+claim_id: "01900000-0000-7000-8000-000000000003"   # UUIDv7 — required by the published schema
 created_at: "2026-05-08T20:00:00Z"        # RFC 3339 UTC, before the run
 metric: "accuracy"
 comparator: ">="
@@ -56,7 +56,7 @@ falsify verify manifest.yaml --expected-hash e3b0c44298fc1c14a...
 
 ```yaml
 version: "prml/0.1"
-claim_id: ""               # short stable id for this claim
+claim_id: ""               # a UUIDv7 (e.g. `python -c "import uuid; ..."` or any RFC 9562 v7 generator)
 created_at: ""             # RFC 3339 UTC, before the run
 metric: ""                 # e.g. "accuracy", "f1"
 comparator: ">="           # >= | <= | > | < | ==

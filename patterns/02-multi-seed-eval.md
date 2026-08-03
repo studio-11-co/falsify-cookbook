@@ -15,7 +15,7 @@ This needs two PRML decisions before the run:
 
 ```yaml
 version: "prml/0.1"
-claim_id: "claude-humaneval-meanacc-5seeds"
+claim_id: "01900000-0000-7000-8000-000000000004"   # UUIDv7 — required by the published schema
 created_at: "2026-05-08T20:00:00Z"
 metric: "mean_accuracy_over_seeds"
 comparator: ">="
@@ -31,7 +31,7 @@ producer:
 The crucial decisions are encoded in:
 
 - `metric: "mean_accuracy_over_seeds"` — a label only you control. Pick a convention and document it.
-- **Seed count lives in the metric, not a manifest field.** PRML v0.1 has no `sample_size` field; encode the number of seeds in the `metric` name (`mean_accuracy_over_seeds`) or `claim_id`, and document the exact seed list in your methodology so a verifier can reproduce it.
+- **Seed count lives in the metric name or `metric_args`, not its own field.** PRML v0.1 has no `sample_size` field; encode the number of seeds in the `metric` name (`mean_accuracy_over_seeds`) or as a key under `metric_args`, and document the exact seed list in your methodology so a verifier can reproduce it. (`claim_id` is a UUIDv7 identifier and carries no semantics.)
 - `seed: 42` — the *base* seed. Your eval code derives seeds 42, 43, 44, 45, 46 from it deterministically.
 
 ## Run

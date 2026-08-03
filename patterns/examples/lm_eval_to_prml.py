@@ -91,13 +91,27 @@ def observed_metric(results: dict, task: str, metric: str) -> float:
     sys.exit(f"metric '{metric}' not in task '{task}'. available: {have}")
 
 
+def _uuid7() -> str:
+    """UUIDv7 (RFC 9562) — the published schema requires claim_id in this form."""
+    import os as _os, time as _time
+    ms = int(_time.time() * 1000) & ((1 << 48) - 1)
+    a = int.from_bytes(_os.urandom(2), "big") & 0x0FFF
+    b = int.from_bytes(_os.urandom(8), "big") & ((1 << 62) - 1)
+    v = (ms << 80) | (0x7 << 76) | (a << 64) | (0b10 << 62) | b
+    h = f"{v:032x}"
+    return f"{h[0:8]}-{h[8:12]}-{h[12:16]}-{h[16:20]}-{h[20:32]}"
+
+
 def build_manifest(results, task, metric, comparator, threshold, dataset_hash, seed):
     ds_id, _, _ = task_identity(results, task)
     return {
         "version": "prml/0.1",
-        "claim_id": f"{task}-{metric}",
+        "claim_id": _uuid7(),
         "created_at": "2026-06-16T00:00:00Z",
         "metric": metric,
+        # the harness task rides here; claim_id is an opaque UUIDv7 and
+        # carries no semantics (schema requirement since falsify 0.3.12)
+        "metric_args": {"lm_eval_task": task},
         "comparator": comparator,
         "threshold": float(threshold),
         "dataset": {"id": ds_id, "hash": dataset_hash},
@@ -134,7 +148,7 @@ def cmd_verify(lock, args):
     if prml.manifest_hash(m) != lock["locked_sha256"]:
         print("  verdict     : TAMPERED (exit 3) — manifest changed after lock")
         return 3
-    observed = observed_metric(results, m["claim_id"].rsplit("-", 1)[0], m["metric"])
+    observed = observed_metric(results, m["metric_args"]["lm_eval_task"], m["metric"])
     ok = prml.evaluate_predicate(observed, m["comparator"], m["threshold"])
     verdict = "PASS" if ok else "FAIL"
     code = 0 if ok else 10

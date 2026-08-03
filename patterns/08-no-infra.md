@@ -10,7 +10,7 @@ PRML is a SHA-256 hash over canonical YAML bytes. You don't need anything we bui
 # 1. Write the manifest
 cat > manifest.yaml <<'EOF'
 version: "prml/0.1"
-claim_id: "resnet50-imagenet-acc"
+claim_id: "01900000-0000-7000-8000-000000000005"   # UUIDv7 — required by the published schema
 created_at: "2026-05-08T20:00:00Z"
 metric: "accuracy"
 comparator: ">="

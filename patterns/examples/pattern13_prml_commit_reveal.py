@@ -139,7 +139,7 @@ def main():
     print("\n[1] PRE-REGISTRATION  — lock the bar before the eval runs (PRML)")
     manifest = {
         "version": "prml/0.1",
-        "claim_id": "harmbench-q3-2026",
+        "claim_id": "01900000-0000-7000-8000-0000000013a7",  # UUIDv7 — required by the schema
         "created_at": "2026-06-15T00:00:00Z",
         "metric": "accuracy",
         "comparator": ">=",
