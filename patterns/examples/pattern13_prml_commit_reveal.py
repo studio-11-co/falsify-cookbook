@@ -70,24 +70,35 @@ def line(c="-"):
 
 
 # ------------------------------------------------------- Layer 2: attestation bundle
-def merkle_root(leaves: list[bytes]) -> str:
-    """SHA-256 binary tree over per-sample outputs.
+def _mth(leaves: list[bytes]) -> bytes:
+    """RFC 6962 §2.1 Merkle Tree Hash. Split at the largest power of two below n.
 
-    Uses RFC 6962-style domain separation (0x00 leaf tag, 0x01 node tag).
-    Shipped valichord_attestation v1.2 hashes pairs bare, so roots differ;
-    see falsify-cookbook#4. This matches ValiChord's v2 direction.
+    Note what this does NOT do: pad an odd level by repeating the last node.
+    That padding makes [A,B,C] and [A,B,C,C] hash to the same root — the
+    CVE-2012-2459 shape — so the root alone no longer identifies the leaf list.
+    RFC 6962 promotes the odd subtree instead, which is why the split is by
+    power of two rather than by pairs.
+    """
+    if len(leaves) == 1:
+        return hashlib.sha256(b"\x00" + leaves[0]).digest()   # leaf-tag 0x00
+    k = 1
+    while k * 2 < len(leaves):
+        k *= 2
+    return hashlib.sha256(b"\x01" + _mth(leaves[:k]) + _mth(leaves[k:])).digest()  # node-tag 0x01
+
+
+def merkle_root(leaves: list[bytes]) -> str:
+    """SHA-256 Merkle root over per-sample outputs, per RFC 6962.
+
+    Two deliberate differences from shipped valichord_attestation v1.2, both
+    raised in falsify-cookbook#4 and both headed for ValiChord's v2:
+      1. leaf/node domain separation (0x00 / 0x01 tags); v1.2 hashes pairs bare
+      2. odd levels promote rather than duplicate (see _mth)
+    Roots therefore differ from v1.2 for the same samples. That is expected.
     """
     if not leaves:
         return sha256_hex(b"")
-    level = [hashlib.sha256(b"\x00" + leaf).digest() for leaf in leaves]  # leaf-tag 0x00
-    while len(level) > 1:
-        if len(level) % 2:
-            level.append(level[-1])  # duplicate last on odd count
-        level = [
-            hashlib.sha256(b"\x01" + level[i] + level[i + 1]).digest()  # node-tag 0x01
-            for i in range(0, len(level), 2)
-        ]
-    return level[0].hex()
+    return _mth(leaves).hex()
 
 
 def build_bundle(model_id, task_id, metrics, samples, generated_at, repo_commit):
