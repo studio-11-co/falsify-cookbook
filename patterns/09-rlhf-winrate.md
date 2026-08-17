@@ -33,13 +33,12 @@ producer:
   id: falsify.dev
 model:
   id: experimental-rlhf-2026-05-09
-notes: |
-  AlpacaEval 2.0, judge: gpt-4-1106-preview, baseline: gpt-4-0613.
-  805 prompts, temperature 0.0, single completion per prompt.
-  Win-rate aggregated by length-controlled scoring (LC win-rate).
+notes: "AlpacaEval 2.0, judge: gpt-4-1106-preview, baseline: gpt-4-0613. 805 prompts, temperature 0.0, single completion per prompt. Win-rate aggregated by length-controlled scoring (LC win-rate)."
 ```
 
 The judge identity, the baseline identity, and the aggregation method (length-controlled vs raw) all live in `notes`. They are part of the canonical bytes — tampering with them later breaks the hash.
+
+**`notes` must be a single line.** PRML forbids control characters — newlines included — in every string field (spec §3.4), because they serialize ambiguously and would let two visually identical manifests hash differently. A YAML block scalar (`notes: |`) therefore produces a manifest a conforming implementation MUST reject.
 
 ## What goes wrong
 
@@ -89,9 +88,7 @@ For multi-judge robustness (more than one judge specified):
 
 ```yaml
 metric: median_win_rate_across_judges
-notes: |
-  Judges: [gpt-4-1106-preview, claude-3.5-sonnet@2025-10-01, llama-3.1-70b-judge]
-  Aggregation: median win-rate across the three judges per prompt.
+notes: "Judges: gpt-4-1106-preview, claude-3.5-sonnet@2025-10-01, llama-3.1-70b-judge. Aggregation: median win-rate across the three judges per prompt."
 ```
 
 The aggregation rule is part of `notes` and therefore part of the hash. Tampering with which judges to count breaks the hash.

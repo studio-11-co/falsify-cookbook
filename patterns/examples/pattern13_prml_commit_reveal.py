@@ -10,8 +10,16 @@ WHAT IS REAL vs MODELLED (read this first):
   Layer 1  Pre-registration   PRML       REAL — uses the published `falsify_prml`
                                           reference (canonicalize + manifest_hash).
   Layer 2  Eval attestation   bundle     REAL crypto — Merkle root over per-sample
-                                          outputs + bundle_hash/content_hash exactly as
-                                          the valichord_attestation v1.2 format describes.
+                                          outputs, plus bundle_hash/content_hash as the
+                                          valichord_attestation v1.2 format describes.
+                                          NOTE: the Merkle tree here uses RFC 6962-style
+                                          leaf/node domain separation (0x00/0x01 tags);
+                                          shipped v1.2 hashes pairs bare, so the same
+                                          samples produce a different root in the library.
+                                          Domain separation is on ValiChord's v2 list, so
+                                          this demo anticipates v2 rather than mirroring
+                                          v1.2 byte-for-byte (thanks to Ceri John for
+                                          catching it — falsify-cookbook#4).
                                           (JSON canonicalisation here is sorted-key/compact,
                                           a faithful stand-in for the bundle's RFC 8785 JCS.)
   Layer 3  Independence       ValiChord  REAL commit-reveal crypto, but run LOCALLY in
@@ -63,7 +71,12 @@ def line(c="-"):
 
 # ------------------------------------------------------- Layer 2: attestation bundle
 def merkle_root(leaves: list[bytes]) -> str:
-    """SHA-256 binary tree over per-sample outputs (valichord_attestation v1.2)."""
+    """SHA-256 binary tree over per-sample outputs.
+
+    Uses RFC 6962-style domain separation (0x00 leaf tag, 0x01 node tag).
+    Shipped valichord_attestation v1.2 hashes pairs bare, so roots differ;
+    see falsify-cookbook#4. This matches ValiChord's v2 direction.
+    """
     if not leaves:
         return sha256_hex(b"")
     level = [hashlib.sha256(b"\x00" + leaf).digest() for leaf in leaves]  # leaf-tag 0x00

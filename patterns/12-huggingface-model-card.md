@@ -75,7 +75,7 @@ Add to the model card body (the README's prose, below the metric):
 
 **accuracy >= 0.90 on imagenet-1k (rev <commit-sha>), seed 42.**
 Committed before the run as a PRML manifest:
-`sha256:fb7403c40afe63d892bf4aea2c123fdd7fe85366b74a277875465c4cb3cbf19c`
+`sha256:85c120acc427dbd9755429b019d6cb2b20b5a8faa61f32fa1700ed24990d7249`
 
 Verify (no install): paste `.prml/imagenet-acc.prml.yaml` at https://registry.falsify.dev and re-derive the hash. Or with the reference CLI:
 

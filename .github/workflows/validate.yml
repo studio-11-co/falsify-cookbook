@@ -1,0 +1,29 @@
+name: Validate manifests and examples
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "0 7 * * 1"   # weekly: catches a tightened validator upstream
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install the PRML reference
+        run: pip install falsify
+
+      - name: Validate every manifest in the docs and run every example
+        run: python3 scripts/validate_manifests.py

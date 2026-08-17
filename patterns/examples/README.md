@@ -9,7 +9,10 @@ python3 pattern13_prml_commit_reveal.py
 ```
 
 Honesty: the PRML layer uses the real `falsify_prml` reference; the bundle hashing
-(Merkle root, bundle_hash/content_hash) is real crypto matching the v1.2 format; the
+(Merkle root, bundle_hash/content_hash) is real crypto. One deviation, flagged in
+falsify-cookbook#4: the Merkle tree uses RFC 6962-style domain separation (0x00/0x01
+tags) while shipped `valichord_attestation` v1.2 hashes pairs bare, so the roots differ
+— this demo anticipates ValiChord's v2 construction. The
 commit-reveal is real crypto but simulated locally (production ValiChord runs on
 Holochain across isolated nodes). No network, stdlib only.
 

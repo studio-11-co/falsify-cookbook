@@ -39,11 +39,10 @@ producer:
   id: falsify.dev     # the originator
 model:
   id: claude-3.5-sonnet@2025-10-01
-notes: |
-  Federated eval. Replication welcome at the same model build.
-  Replicators: please publish observed value + this hash + your producer.id.
-  Disagreement on observed value is a measurement question, not a commitment question.
+notes: "Federated eval. Replication welcome at the same model build. Replicators: please publish observed value + this hash + your producer.id. Disagreement on observed value is a measurement question, not a commitment question."
 ```
+
+`notes` is a single line: PRML forbids newlines in string fields (spec §3.4, and Pattern 9).
 
 ## Workflow
 
