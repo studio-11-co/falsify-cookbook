@@ -31,6 +31,7 @@ Every pattern is:
 | 11 | [PRML + Sigstore for execution integrity](patterns/11-sigstore-execution.md) | Closes the §8.1 gap: who ran the eval, when, against which exact artefacts. |
 | 12 | [PRML in Hugging Face model cards](patterns/12-huggingface-model-card.md) | Make the accuracy number on a published HF model card verifiable, not trust-me prose. |
 | 13 | [PRML + commit-reveal validation for independence attestation](patterns/13-commit-reveal-validation.md) ▶ [runnable](patterns/examples/) | Closes the other §8.1 gap: structural proof that independent evaluators couldn't coordinate verdicts. Co-authored with [ValiChord](https://github.com/topeuph-ai/ValiChord). |
+| 14 | [Where you put the manifest decides what it proves](patterns/14-anchoring-the-manifest.md) | Commit, signed CI attestation, or independent timestamp — what each one establishes for a reader who was not in the room. |
 
 ## Anti-patterns
 
