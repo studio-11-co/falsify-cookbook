@@ -63,6 +63,17 @@ and much weaker evidence to a regulator, a customer or a journalist, who cannot.
 This is not an argument against committing. It is an argument about what the commit proves
 to someone who was not in the room.
 
+**When Anchor A is the whole answer.** Treating the chain of commits as the audit trail is
+mainstream practice, and for a large class of readers it is the right answer. Anthropic's
+*AI-Native SDLC playbook* (21 August 2026) does exactly this for regulated engineering
+teams: the evidence for a change is the committed intent file, carrying its author, its
+timestamp and its full revision history, and the chain of commits is the audit trail of who
+asked for what and who approved it. That is sufficient there, and the reason is worth
+naming. The reader is inside the organisation, or has access to the repository and to the
+people who wrote it, so they can see the review that happened around the commit and judge
+whether the dates are plausible. The gap this pattern is about opens only when the reader
+has neither.
+
 ## Anchor B — a signed CI attestation (if you already produce one)
 
 If your pipeline already emits a signed build attestation — SLSA provenance, an in-toto
