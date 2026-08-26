@@ -27,7 +27,7 @@ Common offenders:
 
 ## How to fix
 
-**Publish only what's structurally needed for verification.** PRML's eight fields are the minimum. They are:
+**Publish only what's structurally needed for verification.** PRML's nine fields are the minimum. They are:
 
 - A metric name (public)
 - A scalar value or null (public)
