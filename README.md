@@ -63,6 +63,7 @@ Working code in [`examples/`](examples/):
 - [`stable-baselines3-rl/`](examples/stable-baselines3-rl/) — RL agent on LunarLander-v2, mean episode reward claim, threshold direction `>=`
 - [`inspect-ai-refusal/`](examples/inspect-ai-refusal/) — Refusal-rate eval via Inspect AI, PRML pre-registration via `falsify-inspect`
 - [`huggingface-eval/`](examples/huggingface-eval/) — `lm-eval-harness` integration, multi-task pre-registration
+- [`runtime-trail-anchor/`](examples/runtime-trail-anchor/) — PRML claim as record zero of a runtime evidence trail; the anchored check returns TAMPERED when the threshold is edited after the result
 
 ## License
 
