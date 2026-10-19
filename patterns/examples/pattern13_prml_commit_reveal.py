@@ -11,17 +11,14 @@ WHAT IS REAL vs MODELLED (read this first):
                                           reference (canonicalize + manifest_hash).
   Layer 2  Eval attestation   bundle     REAL crypto — Merkle root over per-sample
                                           outputs, plus bundle_hash/content_hash as the
-                                          valichord_attestation v1.2 format describes.
-                                          NOTE: the Merkle tree here uses RFC 6962-style
-                                          leaf/node domain separation (0x00/0x01 tags);
-                                          shipped v1.2 hashes pairs bare, so the same
-                                          samples produce a different root in the library.
-                                          Domain separation is on ValiChord's v2 list, so
-                                          this demo anticipates v2 rather than mirroring
-                                          v1.2 byte-for-byte (thanks to Ceri John for
-                                          catching it — falsify-cookbook#4).
-                                          (JSON canonicalisation here is sorted-key/compact,
-                                          a faithful stand-in for the bundle's RFC 8785 JCS.)
+                                          valichord-attestation format describes. The
+                                          Merkle tree is RFC 6962 (0x00/0x01 domain
+                                          separation, odd nodes promoted), matching format
+                                          v2, which shipped 2026-08-18 (raised in
+                                          falsify-cookbook#4). JSON canonicalisation here
+                                          is sorted-key/compact: identical to RFC 8785 JCS
+                                          for these inputs (integers, ASCII strings), but
+                                          NOT for floats or non-ASCII text.
   Layer 3  Independence       ValiChord  REAL commit-reveal crypto, but run LOCALLY in
                                           this process. The production protocol runs across
                                           isolated Holochain nodes on a public DHT; here we
@@ -90,11 +87,11 @@ def _mth(leaves: list[bytes]) -> bytes:
 def merkle_root(leaves: list[bytes]) -> str:
     """SHA-256 Merkle root over per-sample outputs, per RFC 6962.
 
-    Two deliberate differences from shipped valichord_attestation v1.2, both
-    raised in falsify-cookbook#4 and both headed for ValiChord's v2:
-      1. leaf/node domain separation (0x00 / 0x01 tags); v1.2 hashes pairs bare
+    This is the valichord-attestation format v2 construction (shipped 2026-08-18),
+    whose two changes from v1.x were raised in falsify-cookbook#4:
+      1. leaf/node domain separation (0x00 / 0x01 tags); v1.x hashed pairs bare
       2. odd levels promote rather than duplicate (see _mth)
-    Roots therefore differ from v1.2 for the same samples. That is expected.
+    v1.x bundles still verify under their own construction.
     """
     if not leaves:
         return sha256_hex(b"")
@@ -102,7 +99,7 @@ def merkle_root(leaves: list[bytes]) -> str:
 
 
 def build_bundle(model_id, task_id, metrics, samples, generated_at, repo_commit):
-    """Mirror of valichord_attestation.build_bundle: returns the v1.2 bundle dict.
+    """Approximate mirror of valichord_attestation.build_bundle (simplified field set; no format_version).
 
     bundle_hash  = sha256(jcs(whole bundle))      -> binds aggregate to this run
     content_hash = sha256(jcs(bundle minus meta)) -> equal across runs w/ same results

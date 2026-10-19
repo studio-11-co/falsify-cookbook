@@ -54,12 +54,18 @@ Three layers stack:
 
 - `model_id`, `task_id`, `generated_at`, optional `repo_commit`
 - `metrics` — the aggregate scores PRML's threshold applies to
-- `outputs_merkle_root` — SHA-256 binary tree over all per-sample outputs; enables
-  selective disclosure without publishing the full log
+- `outputs_merkle_root` — Merkle root over all per-sample outputs (RFC 6962 since format v2,
+  August 2026; v1.x bundles used a plain SHA-256 tree and still verify, so a verifier
+  must use the bundle's own `format_version`); enables selective disclosure without
+  publishing the full log
 - `bundle_hash` — SHA-256 of the RFC 8785 (JCS) canonical encoding of the entire
   bundle; this binds the reported aggregate to this specific run
-- `content_hash` — same, with the provenance block (`meta`) excluded; two runs that
-  produced identical results share a `content_hash` even if timestamps differ
+- `content_hash` — same, with the provenance block (`meta`) excluded. It still covers
+  `generated_at`, so two runs made at different times have different `content_hash`es
+- `claim_hash` — also excludes run provenance (`generated_at`, `repo_commit`,
+  `harness_version`, `command`); two runs that produced identical results share a
+  `claim_hash`. This is the value a ValiChord validator commits
+  (`reproduction_bundle_hash`)
 
 The `outputs_merkle_root` is what makes the aggregate verifiable. A verifier who
 suspects sample omission can issue a challenge-response: they choose a random nonce,
@@ -92,7 +98,7 @@ The lock produces `.falsify/my-eval/spec.lock.json`, binding the claim before th
 ### 2. Run the eval and build an attestation bundle
 
 ```python
-from valichord_attestation import build_bundle
+from valichord_attestation import build_bundle, bundle_to_dict, claim_hash, content_hash, hash_bundle
 import json
 
 # Collect per-sample outputs from your harness
@@ -108,10 +114,11 @@ bundle = build_bundle(
 )
 
 with open(".falsify/my-eval/bundle.json", "w") as f:
-    json.dump(bundle.__dict__, f, indent=2)
+    json.dump(bundle_to_dict(bundle), f, indent=2)
 
-print("bundle_hash:  ", bundle.bundle_hash)   # 64-char SHA-256 hex
-print("content_hash: ", bundle.content_hash)  # excludes provenance block
+print("bundle_hash: ", hash_bundle(bundle))   # 64-char SHA-256 hex
+print("content_hash:", content_hash(bundle))  # excludes the meta block
+print("claim_hash:  ", claim_hash(bundle))    # also excludes run provenance
 ```
 
 For inspect_ai and lm-evaluation-harness, adapters extract sample-level outputs
@@ -245,10 +252,10 @@ A reader holding the PRML lock + bundle + HarmonyRecord can verify:
 
 ## Further reading
 
-- [ValiChord repository](https://github.com/topeuph-ai/ValiChord) — Holochain
+- [ValiChord repository](https://github.com/ValiChord/ValiChord) — Holochain
   commit-reveal protocol source; four-DNA architecture, HarmonyRecord specification
-- [`valichord_attestation` library](https://github.com/topeuph-ai/ValiChord/tree/main/valichord_attestation) — Python attestation bundle library; format spec v1.2, adapters, challenge-response
-- [Attestation format v1.2 spec](https://github.com/topeuph-ai/ValiChord/blob/main/valichord_attestation/spec/attestation_format_v1.md)
+- [`valichord-attestation` library](https://github.com/ValiChord/valichord-attestation) — Python attestation bundle library, a separate project from the ValiChord protocol (`pip install valichord-attestation`); format v2, adapters, challenge-response
+- [Attestation format spec](https://github.com/ValiChord/valichord-attestation/blob/main/spec/attestation_format_v1.md) (fields, hashes, challenge-response) and [v2](https://github.com/ValiChord/valichord-attestation/blob/main/spec/attestation_format_v2.md) (the current Merkle construction)
 - [Holochain](https://www.holochain.org/) — agent-centric distributed computing: each node
   maintains their own cryptographically signed source chain; shared state lives in a DHT
 - [PRML §8.1](https://spec.falsify.dev/v0.1#section-8.1) — the selective non-publication
