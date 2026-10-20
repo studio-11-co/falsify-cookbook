@@ -247,8 +247,8 @@ A reader holding the PRML lock + bundle + HarmonyRecord can verify:
 
 - [ValiChord repository](https://github.com/topeuph-ai/ValiChord) — Holochain
   commit-reveal protocol source; four-DNA architecture, HarmonyRecord specification
-- [`valichord_attestation` library](https://github.com/topeuph-ai/ValiChord/tree/main/valichord_attestation) — Python attestation bundle library; format spec v1.2, adapters, challenge-response
-- [Attestation format v1.2 spec](https://github.com/topeuph-ai/ValiChord/blob/main/valichord_attestation/spec/attestation_format_v1.md)
+- [`valichord_attestation` library](https://github.com/ValiChord/valichord-attestation) — Python attestation bundle library; format spec v1.2, adapters, challenge-response
+- [Attestation format v1.2 spec](https://github.com/ValiChord/valichord-attestation/blob/main/spec/attestation_format_v1.md)
 - [Holochain](https://www.holochain.org/) — agent-centric distributed computing: each node
   maintains their own cryptographically signed source chain; shared state lives in a DHT
 - [PRML §8.1](https://spec.falsify.dev/v0.1#section-8.1) — the selective non-publication
